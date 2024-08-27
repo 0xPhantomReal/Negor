@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Ed</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .cool-text {
+            position: absolute;
+            top: 20px;
+            font-size: 48px;
+            font-weight: bold;
+            color: black;
+            text-shadow: none;
+        }
+
+        .bouncing-image {
+            width: 200px;
+            height: 200px;
+            background-image: url('https://i.ibb.co/JjyGqRp/special-ed.png');
+            background-size: cover;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .spodercat-text {
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        .social-link:hover {
+            transform: scale(1.1);
+        }
+        .social-link img {
+            width: 30px;
+            height: 30px;
+        }
+        .spodercet {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            background-image: url('https://i.ibb.co/JjyGqRp/special-ed.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            user-select: none;
+            pointer-events: none;
+            animation: fallAndMove linear;
+        }
+
+        @keyframes fallAndMove {
+            0% {
+                transform: translate(-50px, -100vh);
+            }
+            100% {
+                transform: translate(calc(100vw + 50px), 100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cool-text">THIS IS ED</div>
+    <div class="bouncing-image"></div>
+    <div class="spodercat-text">I AM SPECIAL</div>
+    <div class="social-links">
+        <a href="https://pump.fun" target="_blank" class="social-link">
+            <img src="https://pump.fun/_next/image?url=%2Flogo.png&w=64&q=75" alt="Pump.fun">
+        </a>
+        <a href="https://x.com/SpecialEd140794" target="_blank" class="social-link">
+            <img src="https://abs.twimg.com/favicons/twitter.ico" alt="Twitter">
+        </a>
+        <a href="https://dexscreener.com" target="_blank" class="social-link">
+            <img src="https://dexscreener.com/favicon.ico" alt="DexScreener">
+        </a>
+        <a href="https://t.me/+aORM3FvCMBg4M2Ex" target="_blank" class="social-link">
+            <img src="https://telegram.org/img/favicon.ico" alt="Telegram">
+        </a>
+    </div>
+
+    <script>
+        function createSpodercet() {
+            const spodercet = document.createElement('div');
+            spodercet.className = 'spodercet';
+            spodercet.style.top = `${Math.random() * 100}vh`;
+            const duration = Math.random() * 5 + 5; // Random duration between 5 and 10 seconds
+            spodercet.style.animationDuration = `${duration}s`;
+            document.body.appendChild(spodercet);
+
+            spodercet.addEventListener('animationend', () => {
+                spodercet.remove();
+            });
+        }
+
+        function rainSpodercets() {
+            for (let i = 0; i < 100; i++) {
+                setTimeout(createSpodercet, Math.random() * 15000); // Spread creation over 15 seconds
+            }
+        }
+
+        window.addEventListener('load', rainSpodercets);
+    </script>
+</body>
+</html>
