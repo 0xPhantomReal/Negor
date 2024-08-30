@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord-like UI</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #36393f;
+            color: #dcddde;
+        }
+        .container {
+            display: flex;
+            height: 100%;
+        }
+        .server-list {
+            width: 72px;
+            background-color: #202225;
+            padding: 12px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .server-icon {
+            width: 48px;
+            height: 48px;
+            background-color: #36393f;
+            border-radius: 50%;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .server-icon:hover {
+            background-color: #5865f2;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        .server-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .channel-list {
+            width: 240px;
+            background-color: #2f3136;
+            padding: 12px;
+        }
+        .channel-category {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #8e9297;
+            margin-bottom: 8px;
+        }
+        .channel {
+            padding: 6px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .channel:hover {
+            background-color: #36393f;
+        }
+        .channel.active {
+            background-color: #42464d;
+            color: #fff;
+        }
+        .chat-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .chat-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #2f3136;
+            font-weight: bold;
+        }
+        .messages {
+            flex-grow: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .message-input {
+            padding: 16px;
+            background-color: #40444b;
+        }
+        .message-input input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            background-color: #40444b;
+            color: #dcddde;
+        }
+        .discord-dog {
+            max-width: 300px;
+            max-height: 300px;
+            object-fit: contain;
+            margin: 20px 0;
+        }
+        .user {
+            padding-left: 24px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        .user-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 8px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .message {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            width: 100%;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 16px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .message-content {
+            flex-grow: 1;
+        }
+        .message-author {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .message-text {
+            line-height: 1.4;
+        }
+        
+        /* User-specific colors */
+        .user-DogLover99, .avatar-DogLover99 { background-color: #FF6B6B; }
+        .user-LastingJim, .avatar-LastingJim { background-color: #4ECDC4; }
+        .user-StylishChirp, .avatar-StylishChirp { background-color: #45B7D1; }
+        .user-Emma, .avatar-Emma { background-color: #FF8C42; }
+        .user-GroovyBot, .avatar-GroovyBot { background-color: #98D8C8; }
+        .user-Phantom, .avatar-Phantom { background-color: #7B68EE; }
+        .user-ServerOwner, .avatar-ServerOwner { background-color: #FFA500; }
+
+        .message-author-DogLover99 { color: #FF6B6B; }
+        .message-author-LastingJim { color: #4ECDC4; }
+        .message-author-StylishChirp { color: #45B7D1; }
+        .message-author-Emma { color: #FF8C42; }
+        .message-author-GroovyBot { color: #98D8C8; }
+        .message-author-Phantom { color: #7B68EE; }
+        .message-author-ServerOwner { color: #FFA500; }
+
+        .message-text-DogLover99 { color: #FFD3D3; }
+        .message-text-LastingJim { color: #D3FFF8; }
+        .message-text-StylishChirp { color: #D3F2FF; }
+        .message-text-Emma { color: #FFE6D3; }
+        .message-text-GroovyBot { color: #E6FFF8; }
+        .message-text-Phantom { color: #E6E0FF; }
+        .message-text-ServerOwner { color: #FFE0B2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="server-list">
+            <a href="https://pump.fun" target="_blank" class="server-icon">
+                <img src="https://i.postimg.cc/sxthHstT/pump.png" alt="Pump.fun">
+            </a>
+            <a href="https://twitter.com" target="_blank" class="server-icon">
+                <img src="https://abs.twimg.com/responsive-web/client-web/icon-ios.b1fc727a.png" alt="Twitter">
+            </a>
+            <a href="https://dexscreener.com" target="_blank" class="server-icon">
+                <img src="https://i.postimg.cc/66MThDgd/Dexscreener.png" alt="DexScreener">
+            </a>
+            <a href="https://telegram.org" target="_blank" class="server-icon">
+                <img src="https://telegram.org/img/t_logo.png" alt="Telegram">
+            </a>
+        </div>
+        <div class="channel-list">
+            <div class="channel-category">Text Channels</div>
+            <div class="channel"># general</div>
+            <div class="channel"># Dogs</div>
+            <div class="channel"># help</div>
+            <div class="channel-category">Voice Channels</div>
+            <div class="channel">🔊 General</div>
+            <div class="user">
+                <div class="user-avatar user-DogLover99">D</div>
+                <span style="color: #FF6B6B;">DogLover99</span>
+            </div>
+            <div class="user">
+                <div class="user-avatar user-LastingJim">L</div>
+                <span style="color: #4ECDC4;">LastingJim</span>
+            </div>
+            <div class="channel">🔊 Gaming</div>
+            <div class="user">
+                <div class="user-avatar user-StylishChirp">S</div>
+                <span style="color: #45B7D1;">StylishChirp</span>
+            </div>
+            <div class="user">
+                <div class="user-avatar user-Emma">E</div>
+                <span style="color: #FF8C42;">Emma</span>
+            </div>
+            <div class="channel">🔊 Music</div>
+            <div class="user">
+                <div class="user-avatar user-GroovyBot">G</div>
+                <span style="color: #98D8C8;">GroovyBot</span>
+            </div>
+            <div class="user">
+                <div class="user-avatar user-Phantom">P</div>
+                <span style="color: #7B68EE;">Phantom</span>
+            </div>
+            <div class="channel">🔊 AFK</div>
+        </div>
+        <div class="chat-area">
+            <div class="chat-header"># general</div>
+            <div class="messages">
+                <div class="message">
+                    <div class="avatar avatar-ServerOwner">S</div>
+                    <div class="message-content">
+                        <div class="message-author message-author-ServerOwner">Server Owner</div>
+                        <div class="message-text message-text-ServerOwner">Hey everyone! Check out our new server mascot!</div>
+                    </div>
+                </div>
+                <img src="https://i.postimg.cc/76QX3Bkw/Disc-dog.png" alt="Discord Dog" class="discord-dog">
+                <div class="message">
+                    <div class="avatar avatar-DogLover99">D</div>
+                    <div class="message-content">
+                        <div class="message-author message-author-DogLover99">DogLover99</div>
+                        <div class="message-text message-text-DogLover99">Check out this cool Discord dog!</div>
+                    </div>
+                </div>
+                <div class="message">
+                    <div class="avatar avatar-LastingJim">L</div>
+                    <div class="message-content">
+                        <div class="message-author message-author-LastingJim">LastingJim</div>
+                        <div class="message-text message-text-LastingJim">Wow, that's awesome!</div>
+                    </div>
+                </div>
+                <div class="message">
+                    <div class="avatar avatar-StylishChirp">S</div>
+                    <div class="message-content">
+                        <div class="message-author message-author-StylishChirp">StylishChirp</div>
+                        <div class="message-text message-text-StylishChirp">I love how it captures the Discord vibe!</div>
+                    </div>
+                </div>
+                <div class="message">
+                    <div class="avatar avatar-Emma">E</div>
+                    <div class="message-content">
+                        <div class="message-author message-author-Emma">Emma</div>
+                        <div class="message-text message-text-Emma">Can we make it our server mascot?</div>
+                    </div>
+                </div>
+                <div class="message">
+                    <div class="avatar avatar-GroovyBot">G</div>
+                    <div class="message-content">
+                        <div class="message-author message-author-GroovyBot">GroovyBot</div>
+                        <div class="message-text message-text-GroovyBot">🎵 Now playing: Who Let The Dogs Out 🐕</div>
+                    </div>
+                </div>
+                <div class="message">
+                    <div class="avatar avatar-Phantom">P</div>
+                    <div class="message-content">
+                        <div class="message-author message-author-Phantom">Phantom</div>
+                        <div class="message-text message-text-Phantom">This chat is going to the dogs! 😂</div>
+                    </div>
+                </div>
+            </div>
+            <div class="message-input">
+                <input type="text" placeholder="Message #general">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.channel').forEach(channel => {
+            channel.addEventListener('click', function() {
+                document.querySelectorAll('.channel').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelector('.chat-header').textContent = this.textContent;
+            });
+        });
+    </script>
+</body>
+</html>
