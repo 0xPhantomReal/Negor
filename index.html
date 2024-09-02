@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binance Dog Coin</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0b0e11;
+            color: #eaecef;
+        }
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .main-content {
+            flex: 1;
+            margin-right: 20px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .coin-info {
+            display: flex;
+            align-items: center;
+        }
+        .coin-logo {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+        }
+        .coin-name {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .coin-price {
+            font-size: 36px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .price-change {
+            font-size: 18px;
+            margin-top: 5px;
+        }
+        .chart-container {
+            background-color: #1e2329;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .nav-button {
+            display: flex;
+            align-items: center;
+            background-color: #2b3139;
+            color: #eaecef;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .nav-button img {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+        .sidebar {
+            width: 300px;
+            background-color: #1e2329;
+            padding: 20px;
+            border-radius: 4px;
+        }
+        .crypto-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .crypto-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #2b3139;
+            color: #eaecef;
+        }
+        .crypto-list li:hover {
+            background-color: #2b3139;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <header>
+                <div class="coin-info">
+                    <img src="https://i.postimg.cc/yxNjXkPR/Binance-dog.png" alt="Binance Dog" class="coin-logo">
+                    <div>
+                        <div class="coin-name">Binance Dog (BDOG)</div>
+                        <div class="coin-price">$<span id="currentPrice">0.00</span></div>
+                        <div class="price-change" id="priceChange">0.00%</div>
+                    </div>
+                </div>
+                <nav class="nav-buttons">
+                    <a href="https://pump.fun" class="nav-button">
+                        <img src="https://i.postimg.cc/sxthHstT/pump.png" alt="Pump.fun logo">
+                        Pump.fun
+                    </a>
+                    <a href="https://x.com/BinanceDogSolan" class="nav-button">
+                        <img src="https://abs.twimg.com/favicons/twitter.ico" alt="Twitter logo">
+                        Twitter
+                    </a>
+                    <a href="https://dexscreener.com" class="nav-button">
+                        <img src="https://dexscreener.com/favicon.ico" alt="Dexscreener logo">
+                        Dexscreener
+                    </a>
+                    <a href="https://t.me/+-Pk4vLWlOTA4NDI0" class="nav-button">
+                        <img src="https://telegram.org/img/favicon.ico" alt="Telegram logo">
+                        Telegram
+                    </a>
+                </nav>
+            </header>
+            <div class="chart-container">
+                <canvas id="priceChart"></canvas>
+            </div>
+        </div>
+        <div class="sidebar">
+            <h3>Market Pairs</h3>
+            <ul class="crypto-list">
+                <li>BDOG/USDT</li>
+                <li>BTC/USDT</li>
+                <li>ETH/USDT</li>
+                <li>BNB/USDT</li>
+                <li>DOGE/USDT</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        let priceData = Array(300).fill(1000);
+        let labels = Array(300).fill('');
+
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'BDOG Price',
+                    data: priceData,
+                    borderColor: 'green',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    fill: false,
+                    cubicInterpolationMode: 'monotone',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                animation: {
+                    duration: 0
+                },
+                scales: {
+                    x: {
+                        display: false
+                    },
+                    y: {
+                        beginAtZero: false,
+                        suggestedMin: 950,
+                        suggestedMax: 1050
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        function updateChart() {
+            const lastPrice = priceData[priceData.length - 1];
+            const randomFactor = Math.random();
+            const newPrice = lastPrice + (randomFactor > 0.3 ? 1 : -1) * randomFactor * 1;
+            
+            priceData.push(newPrice);
+            priceData.shift();
+            
+            labels.push('');
+            labels.shift();
+
+            const priceChange = ((newPrice - priceData[0]) / priceData[0]) * 100;
+            document.getElementById('currentPrice').textContent = newPrice.toFixed(2);
+            document.getElementById('priceChange').textContent = priceChange.toFixed(2) + '%';
+            document.getElementById('priceChange').style.color = priceChange >= 0 ? 'green' : 'red';
+
+            chart.data.datasets[0].borderColor = newPrice >= lastPrice ? 'green' : 'red';
+            chart.update();
+        }
+
+        setInterval(updateChart, 50);
+    </script>
+</body>
+</html>
