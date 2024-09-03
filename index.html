@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Cat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background-color: #87CEEB; /* Sky blue */
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            z-index: 2;
+        }
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 72px;
+            color: white;
+            text-shadow: 
+                3px 3px 0 #87CEEB,
+                -1px -1px 0 #87CEEB,  
+                1px -1px 0 #87CEEB,
+                -1px 1px 0 #87CEEB,
+                1px 1px 0 #87CEEB;
+            margin: 0;
+        }
+        .image-container {
+            text-align: center;
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .cat-image {
+            width: 300px;
+            height: auto;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+        .cloud:before, .cloud:after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+        .cloud1 { width: 100px; height: 40px; top: 20%; left: 10%; animation: moveCloud 15s linear infinite; }
+        .cloud1:before { width: 50px; height: 50px; top: -25px; left: 10px; }
+        .cloud1:after { width: 70px; height: 70px; top: -35px; right: 10px; }
+        
+        .cloud2 { width: 80px; height: 30px; top: 40%; right: 20%; animation: moveCloud 18s linear infinite; }
+        .cloud2:before { width: 40px; height: 40px; top: -20px; left: 8px; }
+        .cloud2:after { width: 55px; height: 55px; top: -28px; right: 8px; }
+        
+        .cloud3 { width: 120px; height: 50px; bottom: 30%; left: 30%; animation: moveCloud 20s linear infinite; }
+        .cloud3:before { width: 60px; height: 60px; top: -30px; left: 12px; }
+        .cloud3:after { width: 80px; height: 80px; top: -40px; right: 12px; }
+        
+        @keyframes moveCloud {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100vw); }
+        }
+        .social-links {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 3;
+        }
+        .social-links a {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            margin: 0 10px;
+            background-color: white;
+            border-radius: 50%;
+            color: #87CEEB;
+            font-size: 24px;
+            line-height: 50px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .social-links img {
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Cloud Cat</h1>
+    </div>
+    <div class="image-container">
+        <img src="https://i.postimg.cc/1RY4KRSS/Cloud-cat.png" alt="Cloud Cat" class="cat-image">
+    </div>
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+    <div class="social-links">
+        <a href="https://pump.fun" target="_blank"><img src="https://i.postimg.cc/sxthHstT/pump.png" alt="Pump.fun"></a>
+        <a href="https://x.com/CloudCatSo" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://dexscreener.com" target="_blank"><img src="https://dexscreener.com/favicon.png" alt="Dexscreener"></a>
+        <a href="https://t.me/+jMSSocHUk3ZjOTRk" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+    </div>
+</body>
+</html>
