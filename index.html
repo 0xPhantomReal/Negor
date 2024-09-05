@@ -3,142 +3,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>McWog</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <title>Cwog</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        body, html {
-            height: 100%;
-            margin: 0;
+        body {
             font-family: Arial, sans-serif;
-        }
-        .bg {
-            background-image: url('https://i.postimg.cc/rFPfWsDd/2-A4-D13-F600000578-0-image-a-1-1436273812385.jpg');
-            height: 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
+            margin: 0;
+            padding: 0;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            background-color: #FFFFFF;
+            color: #050F19;
         }
+
+        .sidebar {
+            width: 250px;
+            background-color: #F7F8FA;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0052FF;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            cursor: pointer;
+            color: #5B616E;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            color: #0052FF;
+        }
+
+        .nav-item i {
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
         .header {
             display: flex;
-            justify-content: center;
-            width: 100%;
-            padding: 20px 0;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
-        .social-links {
+
+        .search-bar {
+            width: 300px;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #E4E5E7;
+            background-color: #FFFFFF;
+            color: #050F19;
+        }
+
+        .user-actions i {
+            margin-left: 20px;
+            cursor: pointer;
+            color: #5B616E;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #050F19;
+        }
+
+        .center-logo {
             display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+        }
+
+        .center-logo img {
+            width: 100px;
+            height: 100px;
+            margin-right: 20px;
+        }
+
+        .center-logo h2 {
+            font-size: 36px;
+            color: #0052FF;
+        }
+
+        .asset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
         }
-        .social-link {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: transform 0.3s;
-        }
-        .social-link:hover {
-            transform: scale(1.1);
-        }
-        .social-link img {
-            width: 30px;
-            height: 30px;
-        }
-        .mcwog-title {
-            font-family: 'Oswald', sans-serif;
-            font-size: 120px;
-            font-weight: 700;
-            color: #FFD700; /* Golden yellow */
-            text-shadow: 
-                -2px -2px 0 #FF4500, /* Red outline */
-                2px -2px 0 #FF4500,
-                -2px 2px 0 #FF4500,
-                2px 2px 0 #FF4500;
-            margin-top: 200px;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-        }
-        .content {
-            text-align: center;
+
+        .asset-card {
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 10px;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
+            height: 200px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .asset-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #F0F5FF;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #0052FF;
+        }
+
+        .asset-name {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #050F19;
+        }
+
+        .asset-price {
+            color: #5B616E;
+            font-size: 24px;
+            margin-bottom: 10px;
+            transition: all 0.5s ease;
+        }
+
+        .asset-change {
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.5s ease;
+        }
+
+        .positive {
+            color: #098551;
+        }
+
+        .negative {
+            color: #CF202F;
+        }
+
+        .chart {
+            width: 100%;
+            height: 40px;
+            background-color: #F7F8FA;
+            margin-top: 15px;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chart-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
+            display: flex;
+            align-items: flex-end;
+            padding: 0 2px;
+            box-sizing: border-box;
         }
-        .mcwog-image {
-            max-width: 300px;
-            height: auto;
-            animation: walkIn 5s ease-in-out forwards;
-            margin-top: 80px; /* Changed from 100px to 50px */
+
+        .chart-bar {
+            flex: 1;
+            background-color: #0052FF;
+            margin: 0 1px;
+            transition: all 0.5s ease;
         }
-        @keyframes walkIn {
-            0% {
-                transform: translateX(-100vw);
-            }
-            100% {
-                transform: translateX(0);
-            }
+
+        .coinwog-card {
+            background-color: #F0F5FF;
+            border: 2px solid #0052FF;
+        }
+
+        .coinwog-icon {
+            background-color: #0052FF;
+            color: #FFFFFF;
         }
     </style>
 </head>
 <body>
-    <div class="bg">
+    <div class="sidebar">
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/sXMR5cSk/Coinwogg.png" alt="Coinwog Logo" class="logo-img">
+            <div class="logo-text">Coinwog</div>
+        </div>
+        <a href="#" class="nav-item"><i class="fas fa-home"></i> Home</a>
+        <a href="#" class="nav-item"><i class="fas fa-chart-line"></i> Assets</a>
+        <a href="#" class="nav-item"><i class="fas fa-exchange-alt"></i> Trade</a>
+        <a href="#" class="nav-item"><i class="fas fa-wallet"></i> Wallet</a>
+        <a href="#" class="nav-item"><i class="fas fa-cog"></i> Settings</a>
+        <a href="https://pump.fun" target="_blank" class="nav-item"><i class="fas fa-pump-soap"></i> Pump.fun</a>
+        <a href="https://x.com/McWogSol" target="_blank" class="nav-item"><i class="fab fa-twitter"></i> Twitter</a>
+        <a href="https://dexscreener.com" target="_blank" class="nav-item"><i class="fas fa-search-dollar"></i> Dexscreener</a>
+        <a href="https://t.me/+IVUsAgSrTjliMjNk" target="_blank" class="nav-item"><i class="fab fa-telegram"></i> Telegram</a>
+    </div>
+    <div class="main-content">
         <div class="header">
-            <div class="social-links">
-                <a href="https://pump.fun" target="_blank" class="social-link">
-                    <img src="https://i.postimg.cc/sxthHstT/pump.png" alt="Pump.fun">
-                </a>
-                <a href="https://x.com/McWogSol" target="_blank" class="social-link">
-                    <img src="https://abs.twimg.com/favicons/twitter.ico" alt="Twitter">
-                </a>
-                <a href="https://dexscreener.com" target="_blank" class="social-link">
-                    <img src="https://dexscreener.com/favicon.ico" alt="Dexscreener">
-                </a>
-                <a href="https://t.me/+QABDbc696lg5ZmJk" target="_blank" class="social-link">
-                    <img src="https://telegram.org/img/favicon.ico" alt="Telegram">
-                </a>
+            <input type="text" class="search-bar" placeholder="Search">
+            <div class="user-actions">
+                <i class="fas fa-bell"></i>
+                <i class="fas fa-user-circle"></i>
             </div>
         </div>
-        <div class="content">
-            <h1 class="mcwog-title">McWog</h1>
-            <img src="https://i.postimg.cc/c15CNGK7/Mcwog.png" alt="McWog" class="mcwog-image">
+        <div class="center-logo">
+            <img src="https://i.postimg.cc/sXMR5cSk/Coinwogg.png" alt="Coinwog Logo">
+            <h2>Coinwog</h2>
+        </div>
+        <h2 class="section-title">Watchlist</h2>
+        <div class="asset-grid" id="assetGrid">
+            <!-- Asset cards will be dynamically added here -->
         </div>
     </div>
 
-    <audio id="backgroundMusic" loop>
-        <source src="https://www.dropbox.com/scl/fi/jn8od9nuogxu8t3fblmv6/McDonalds-Beep-Sound-Effect.mp3?rlkey=04b8mgsout04bwnj69x7ipepe&st=05d1ae2l&raw=1" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var audio = document.getElementById('backgroundMusic');
-            audio.volume = 0.5; // Set volume to 50%
+        const memeCoins = [
+            { name: "Cwog", symbol: "CWG", price: 50.00, isMainCoin: true },
+            { name: "DogeMoon", symbol: "DGMN", price: 0.000069 },
+            { name: "CatRocket", symbol: "CRKT", price: 0.0042 },
+            { name: "PepeLambo", symbol: "PLBO", price: 0.00801 },
+            { name: "ElonMars", symbol: "ELMR", price: 0.00023 },
+            { name: "SafeMeme", symbol: "SMEM", price: 0.000105 },
+            { name: "MoonShiba", symbol: "MSHB", price: 0.0000031 },
+            { name: "RocketDoge", symbol: "RKDG", price: 0.000078 },
+            { name: "GarlicBread", symbol: "GRLC", price: 0.00567 }
+        ];
 
-            // Function to play audio
-            function playAudio() {
-                audio.play().then(() => {
-                    console.log("Music started playing automatically");
-                }).catch(error => {
-                    console.log("Autoplay was prevented. Will play on user interaction.", error);
-                    // Add click event listener to play audio on user interaction
-                    document.body.addEventListener('click', function() {
-                        audio.play().then(() => {
-                            console.log("Music started playing on user interaction");
-                        }).catch(error => {
-                            console.log("Error playing music:", error);
-                        });
-                    }, { once: true });
-                });
-            }
+        function createAssetCard(coin) {
+            return `
+                <div class="asset-card ${coin.isMainCoin ? 'coinwog-card' : ''}">
+                    <div>
+                        <div class="asset-icon ${coin.isMainCoin ? 'coinwog-icon' : ''}">${coin.symbol}</div>
+                        <div class="asset-name">${coin.name}</div>
+                    </div>
+                    <div>
+                        <div class="asset-price">$${coin.price.toFixed(coin.isMainCoin ? 2 : 6)}</div>
+                        <div class="asset-change">0.00%</div>
+                    </div>
+                    <div class="chart">
+                        <div class="chart-line">
+                            ${Array(20).fill('<div class="chart-bar"></div>').join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
 
-            // Attempt to play audio immediately
-            playAudio();
+        const assetGrid = document.getElementById('assetGrid');
+        memeCoins.forEach(coin => {
+            assetGrid.innerHTML += createAssetCard(coin);
         });
+
+        function updatePrices() {
+            const cards = document.querySelectorAll('.asset-card');
+            cards.forEach((card, index) => {
+                const coin = memeCoins[index];
+                let priceChange;
+
+                if (coin.isMainCoin) {
+                    // Coinwog has a higher chance of positive change
+                    priceChange = (Math.random() * 0.06) - 0.02; // -2% to +4%
+                } else {
+                    priceChange = (Math.random() - 0.5) * 0.1; // -5% to +5%
+                }
+
+                coin.price *= (1 + priceChange);
+
+                const priceElement = card.querySelector('.asset-price');
+                const changeElement = card.querySelector('.asset-change');
+                const chartBars = card.querySelectorAll('.chart-bar');
+
+                priceElement.textContent = `$${coin.price.toFixed(coin.isMainCoin ? 2 : 6)}`;
+                const changePercentage = (priceChange * 100).toFixed(2);
+                changeElement.textContent = `${changePercentage}%`;
+                changeElement.className = 'asset-change ' + (priceChange >= 0 ? 'positive' : 'negative');
+
+                // Update chart
+                const newHeight = Math.random() * 100 + '%';
+                const lastBar = chartBars[chartBars.length - 1];
+                lastBar.style.height = newHeight;
+                lastBar.style.backgroundColor = priceChange >= 0 ? '#098551' : '#CF202F';
+
+                // Shift bars to the left
+                for (let i = 0; i < chartBars.length - 1; i++) {
+                    chartBars[i].style.height = chartBars[i + 1].style.height;
+                    chartBars[i].style.backgroundColor = chartBars[i + 1].style.backgroundColor;
+                }
+            });
+        }
+
+        setInterval(updatePrices, 2000); // Update every 2 seconds
     </script>
 </body>
 </html>
