@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retardedwog Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Bangers&family=Permanent+Marker&family=Fredoka+One&family=Creepster&family=Press+Start+2P&family=Bungee&family=Luckiest+Guy&family=Rye&family=Nosifer&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('https://i.postimg.cc/DZpb4k8h/happy-girl-with-down-syndrome-posing-while-drawing.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            overflow: hidden;
+        }
+        .bouncing-frog {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 400px;
+            height: auto;
+            animation: 
+                bounce-to-middle 5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards,
+                uncontrolled-bounce 0.5s ease-in-out infinite alternate 5s;
+        }
+        @keyframes bounce-to-middle {
+            0% { left: 0; transform: rotate(0deg); }
+            20% { left: 15%; transform: rotate(15deg); }
+            40% { left: 30%; transform: rotate(-10deg); }
+            60% { left: 40%; transform: rotate(5deg); }
+            80% { left: 43%; transform: rotate(-3deg); }
+            95% { left: 44%; transform: rotate(1deg); }
+            100% { left: 44%; transform: rotate(0deg); }
+        }
+        @keyframes uncontrolled-bounce {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-20px, -30px) rotate(-5deg); }
+            50% { transform: translate(10px, -50px) rotate(5deg); }
+            75% { transform: translate(-15px, -20px) rotate(-3deg); }
+            100% { transform: translate(5px, -40px) rotate(3deg); }
+        }
+        .spinning-text {
+            position: absolute;
+            left: 50%;
+            bottom: 420px;
+            transform: translateX(-50%);
+            font-size: 48px;
+            white-space: nowrap;
+            animation: spin-and-grow 5s forwards;
+        }
+        .spinning-text span {
+            display: inline-block;
+            animation: wobble 2s infinite;
+        }
+        @keyframes spin-and-grow {
+            0% { transform: translateX(-50%) rotate(0deg); opacity: 0; }
+            100% { transform: translateX(-50%) rotate(720deg); opacity: 1; }
+        }
+        @keyframes wobble {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .button {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-size: cover;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            transform: scale(1.1);
+        }
+        #pump { background-image: url('https://i.postimg.cc/sxthHstT/pump.png'); }
+        #twitter { background-image: url('https://abs.twimg.com/favicons/twitter.ico'); }
+        #dexscreener { background-image: url('https://dexscreener.com/favicon.ico'); }
+        #telegram { background-image: url('https://telegram.org/img/favicon.ico'); }
+    </style>
+</head>
+<body>
+    <div class="spinning-text">
+        <span style="font-family: 'Comic Neue', cursive; color: #FF0000;">R</span>
+        <span style="font-family: 'Bangers', cursive; color: #00FF00;">e</span>
+        <span style="font-family: 'Permanent Marker', cursive; color: #0000FF;">t</span>
+        <span style="font-family: 'Fredoka One', cursive; color: #FFFF00;">a</span>
+        <span style="font-family: 'Creepster', cursive; color: #FF00FF;">r</span>
+        <span style="font-family: 'Press Start 2P', cursive; color: #00FFFF;">d</span>
+        <span style="font-family: 'Bungee', cursive; color: #FF8000;">e</span>
+        <span style="font-family: 'Luckiest Guy', cursive; color: #8000FF;">d</span>
+        <span style="font-family: 'Rye', cursive; color: #0080FF;">w</span>
+        <span style="font-family: 'Nosifer', cursive; color: #FF0080;">o</span>
+        <span style="font-family: 'Comic Neue', cursive; color: #80FF00;">g</span>
+    </div>
+    <img src="https://i.postimg.cc/BQG2xNtr/Retardedfwog.png" alt="Bouncing Frog" class="bouncing-frog">
+    <a href="https://pump.fun" target="_blank" class="button" id="pump"></a>
+    <a href="https://x.com/ReWogSOL" target="_blank" class="button" id="twitter"></a>
+    <a href="https://dexscreener.com" target="_blank" class="button" id="dexscreener"></a>
+    <a href="https://t.me/+QTi4EsPlV0MwMWMx" target="_blank" class="button" id="telegram"></a>
+
+    <audio id="backgroundMusic" loop>
+        <source src="https://www.dropbox.com/scl/fi/jga2r1z1zsuzeagg6xv8x/Darius-s-Stimming-Sounds.mp3?rlkey=cr8zifm6bdb1n0c9m9w509eqy&st=swjtyzgx&raw=1"type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        const buttons = document.querySelectorAll('.button');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+
+        function randomPosition(element) {
+            const maxX = window.innerWidth - element.offsetWidth;
+            const maxY = window.innerHeight - element.offsetHeight;
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            element.style.left = randomX + 'px';
+            element.style.top = randomY + 'px';
+        }
+
+        buttons.forEach(button => {
+            randomPosition(button);
+            let clickCount = 0;
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (clickCount === 0) {
+                    randomPosition(e.target);
+                    clickCount++;
+                } else {
+                    window.open(e.target.href, '_blank');
+                    clickCount = 0;
+                }
+            });
+        });
+
+        window.addEventListener('load', function() {
+            backgroundMusic.play().catch(error => {
+                console.log('Autoplay prevented:', error);
+                document.body.addEventListener('click', () => {
+                    backgroundMusic.play();
+                }, { once: true });
+            });
+        });
+    </script>
+</body>
+</html>
