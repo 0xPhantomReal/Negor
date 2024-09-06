@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alameda Dog</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+        body {
+            font-family: 'Indie Flower', cursive;
+            background-color: white;
+            color: black;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .social-link:hover {
+            background-color: #e0e0e0;
+            transform: scale(1.1);
+        }
+
+        .social-link img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .alamedog-image {
+            width: 200px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 48px;
+            text-align: center;
+        }
+
+        .doodle {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="social-links">
+            <a href="https://pump.fun" target="_blank" class="social-link">
+                <img src="https://i.postimg.cc/sxthHstT/pump.png" alt="Pump.fun">
+            </a>
+            <a href="https://t.me/+ak8EBW7Nq2ZiYjkx" target="_blank" class="social-link">
+                <img src="https://abs.twimg.com/favicons/twitter.ico" alt="Twitter">
+            </a>
+            <a href="https://dexscreener.com" target="_blank" class="social-link">
+                <img src="https://dexscreener.com/favicon.ico" alt="Dexscreener">
+            </a>
+            <a href="https://t.me/+ak8EBW7Nq2ZiYjkx" target="_blank" class="social-link">
+                <img src="https://telegram.org/img/favicon.ico" alt="Telegram">
+            </a>
+        </div>
+    </div>
+
+    <div class="content">
+        <img src="https://i.postimg.cc/PxT2J6v2/Alamedog.png" alt="Alamedog" class="alamedog-image">
+        <h1>Alameda Dog</h1>
+    </div>
+
+    <script>
+        const doodles = [];
+
+        function createDoodle(imageSrc) {
+            const doodle = document.createElement('img');
+            doodle.src = imageSrc;
+            doodle.className = 'doodle';
+            document.body.appendChild(doodle);
+
+            const doodleObj = {
+                element: doodle,
+                x: Math.random() * (window.innerWidth - 30),
+                y: Math.random() * (window.innerHeight - 30),
+                speedX: (Math.random() - 0.5) * 4,
+                speedY: (Math.random() - 0.5) * 4,
+                width: 30,
+                height: 30
+            };
+
+            doodles.push(doodleObj);
+
+            // Random sway parameters for each doodle
+            const swayDuration = 3 + Math.random() * 2;
+            const swayAngle = 10 + Math.random() * 10;
+
+            doodle.style.animation = `sway-doodle-${doodles.length} ${swayDuration}s ease-in-out infinite`;
+
+            // Create a unique keyframe animation for each doodle
+            const styleSheet = document.styleSheets[0];
+            const keyframes = `
+                @keyframes sway-doodle-${doodles.length} {
+                    0%, 100% { transform: rotate(${-swayAngle}deg); }
+                    50% { transform: rotate(${swayAngle}deg); }
+                }
+            `;
+            styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+        }
+
+        function moveDoodles() {
+            doodles.forEach(doodle => {
+                doodle.x += doodle.speedX;
+                doodle.y += doodle.speedY;
+
+                // Bounce off edges
+                if (doodle.x < 0 || doodle.x > window.innerWidth - doodle.width) {
+                    doodle.speedX = -doodle.speedX;
+                    doodle.x = Math.max(0, Math.min(doodle.x, window.innerWidth - doodle.width));
+                }
+                if (doodle.y < 0 || doodle.y > window.innerHeight - doodle.height) {
+                    doodle.speedY = -doodle.speedY;
+                    doodle.y = Math.max(0, Math.min(doodle.y, window.innerHeight - doodle.height));
+                }
+
+                // Check collision with other doodles
+                doodles.forEach(otherDoodle => {
+                    if (doodle !== otherDoodle) {
+                        const dx = doodle.x - otherDoodle.x;
+                        const dy = doodle.y - otherDoodle.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < doodle.width) {
+                            // Collision detected, swap velocities
+                            const tempSpeedX = doodle.speedX;
+                            const tempSpeedY = doodle.speedY;
+                            doodle.speedX = otherDoodle.speedX;
+                            doodle.speedY = otherDoodle.speedY;
+                            otherDoodle.speedX = tempSpeedX;
+                            otherDoodle.speedY = tempSpeedY;
+                        }
+                    }
+                });
+
+                doodle.element.style.left = `${doodle.x}px`;
+                doodle.element.style.top = `${doodle.y}px`;
+            });
+
+            requestAnimationFrame(moveDoodles);
+        }
+
+        // Array of image URLs
+        const imageUrls = [
+            'https://i.postimg.cc/k4LnDkX8/woman.png',
+            'https://i.postimg.cc/XY26pTsJ/sbf.png'
+        ];
+
+        // Create 100 doodles with the two provided images
+        for (let i = 0; i < 100; i++) {
+            const randomImageUrl = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+            createDoodle(randomImageUrl);
+        }
+
+        moveDoodles();
+    </script>
+</body>
+</html>
