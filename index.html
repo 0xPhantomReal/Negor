@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twincocks</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+        .background {
+            background-image: url('https://i.postimg.cc/MTxXR1x1/Towers.webp');
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+        .twincocks {
+            position: absolute;
+            height: 100%;
+            object-fit: contain;
+            object-position: center right;
+            right: 5%;
+        }
+        .sperm, .twincocks-text {
+            position: absolute;
+            width: 50px;
+            height: auto;
+            display: none;
+            cursor: grab;
+        }
+        .sperm:active, .twincocks-text:active {
+            cursor: grabbing;
+        }
+        .twincocks-text {
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #FF69B4;
+            text-shadow: 2px 2px 4px #000000;
+            white-space: nowrap;
+            transform: rotate(-10deg);
+            width: auto;
+        }
+        .button-container {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+        .link-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .link-button:hover {
+            transform: scale(1.1);
+        }
+        .link-icon {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <img src="https://i.postimg.cc/RZkWSjDs/Twin-cocks-no-bkg.png" alt="Twincocks" class="twincocks">
+        <div class="button-container">
+            <a href="https://pump.fun" target="_blank" class="link-button">
+                <img src="https://i.postimg.cc/sxthHstT/pump.png" alt="Pump.fun" class="link-icon">
+            </a>
+            <a href="https://x.com/TwinSolCocks" target="_blank" class="link-button">
+                <img src="https://i.postimg.cc/6qwgL517/free-twitter-logo-icon-2429-thumb.png" alt="Twitter" class="link-icon">
+            </a>
+            <a href="https://dexscreener.com" target="_blank" class="link-button">
+                <img src="https://i.postimg.cc/66MThDgd/Dexscreener.png" alt="DexScreener" class="link-icon">
+            </a>
+            <a href="https://t.me/+76euyIM3x8ZkNjkx" target="_blank" class="link-button">
+                <img src="https://i.postimg.cc/28tL1qtS/telegram-icon-6896828-1280.webp" alt="Telegram" class="link-icon">
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const background = document.querySelector('.background');
+        const twincocks = document.querySelector('.twincocks');
+        const numSperms = 15;
+        const numTexts = 5;
+        let fallingElements = [];
+        let isDragging = false;
+        let draggedElement = null;
+        let offsetX, offsetY;
+
+        function createSperm() {
+            const sperm = document.createElement('img');
+            sperm.src = 'https://i.postimg.cc/hGMbX4R4/cartoon-sperm-cell-runs-vector-hand-drawn-illustration-isolated-transparent-background-20412-760-Pho.png';
+            sperm.alt = 'Sperm Cell';
+            sperm.classList.add('sperm');
+            sperm.dataset.falling = 'true';
+            background.appendChild(sperm);
+            return sperm;
+        }
+
+        function createTwincocksText() {
+            const text = document.createElement('div');
+            text.textContent = 'Twincocks';
+            text.classList.add('twincocks-text');
+            text.dataset.falling = 'true';
+            background.appendChild(text);
+            return text;
+        }
+
+        function shootElement(element, startY) {
+            const twincocksRect = twincocks.getBoundingClientRect();
+            let x = twincocksRect.left + Math.random() * twincocksRect.width - element.offsetWidth / 2;
+            let y = startY;
+            let ySpeed = -3 - Math.random() * 2;
+            let xSpeed = (Math.random() - 0.5) * 2;
+
+            element.style.display = 'block';
+            element.style.left = `${x}px`;
+            element.style.top = `${y}px`;
+
+            function animate() {
+                y += ySpeed;
+                x += xSpeed;
+
+                element.style.top = `${y}px`;
+                element.style.left = `${x}px`;
+
+                if (y > -element.offsetHeight && y < window.innerHeight) {
+                    requestAnimationFrame(animate);
+                } else {
+                    element.style.display = 'none';
+                    element.dataset.falling = 'true';
+                }
+            }
+
+            animate();
+        }
+
+        function fallElement(element) {
+            let x = parseFloat(element.style.left) || Math.random() * (window.innerWidth - element.offsetWidth);
+            let y = parseFloat(element.style.top) || -element.offsetHeight;
+            let ySpeed = 0.2 + Math.random() * 0.3;
+
+            element.style.display = 'block';
+            element.style.left = `${x}px`;
+            element.style.top = `${y}px`;
+
+            function animate() {
+                if (element.dataset.falling === 'true') {
+                    y += ySpeed;
+
+                    if (y > window.innerHeight) {
+                        y = -element.offsetHeight;
+                        x = Math.random() * (window.innerWidth - element.offsetWidth);
+                    }
+
+                    element.style.top = `${y}px`;
+                    element.style.left = `${x}px`;
+
+                    requestAnimationFrame(animate);
+                }
+            }
+
+            animate();
+        }
+
+        function animateTwincocks() {
+            let y = window.innerHeight;
+            let speed = -1;
+
+            function update() {
+                y += speed;
+
+                if (y <= 0) {
+                    y = 0;
+                    speed = 0;
+                    fallingElements.forEach(element => {
+                        setTimeout(() => fallElement(element), Math.random() * 3000);
+                    });
+                    return;
+                }
+
+                twincocks.style.top = `${y}px`;
+
+                if (speed !== 0) {
+                    const rumbleX = (Math.random() - 0.5) * 5;
+                    const rumbleY = (Math.random() - 0.5) * 5;
+                    twincocks.style.transform = `translate(${rumbleX}px, ${rumbleY}px)`;
+
+                    if (Math.random() < 0.05) {
+                        const element = fallingElements[Math.floor(Math.random() * fallingElements.length)];
+                        shootElement(element, y);
+                    }
+                } else {
+                    twincocks.style.transform = 'none';
+                }
+
+                requestAnimationFrame(update);
+            }
+
+            update();
+        }
+
+        function onMouseDown(e) {
+            if (e.target.classList.contains('sperm') || e.target.classList.contains('twincocks-text')) {
+                isDragging = true;
+                draggedElement = e.target;
+                draggedElement.dataset.falling = 'false';
+                offsetX = e.clientX - draggedElement.getBoundingClientRect().left;
+                offsetY = e.clientY - draggedElement.getBoundingClientRect().top;
+                draggedElement.style.zIndex = '1000';
+            }
+        }
+
+        function onMouseMove(e) {
+            if (isDragging) {
+                draggedElement.style.left = `${e.clientX - offsetX}px`;
+                draggedElement.style.top = `${e.clientY - offsetY}px`;
+            }
+        }
+
+        function onMouseUp() {
+            if (isDragging) {
+                isDragging = false;
+                draggedElement.style.zIndex = '';
+                draggedElement.dataset.falling = 'true';
+                fallElement(draggedElement);
+                draggedElement = null;
+            }
+        }
+
+        // Initialize
+        for (let i = 0; i < numSperms; i++) {
+            const sperm = createSperm();
+            fallingElements.push(sperm);
+        }
+        for (let i = 0; i < numTexts; i++) {
+            const text = createTwincocksText();
+            fallingElements.push(text);
+        }
+
+        animateTwincocks();
+
+        // Add event listeners for dragging
+        document.addEventListener('mousedown', onMouseDown);
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+    </script>
+</body>
+</html>
