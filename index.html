@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundCloud Cat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Interstate', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Garuda, Verdana, Tahoma, sans-serif;
+            background-color: #f2f2f2;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .logo {
+            font-family: 'Bangers', cursive;
+            font-size: 24px;
+            color: #FF5349;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .banner {
+            background: linear-gradient(135deg, #FF5349, #ff8c00);
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+        .banner h1 {
+            font-family: 'Bangers', cursive;
+            font-size: 48px;
+            margin: 0;
+        }
+        .content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .cat-image {
+            width: 300px;
+            height: auto;
+            display: block;
+            margin: 0 auto 40px;
+        }
+        .track-list {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .track {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .track:last-child {
+            border-bottom: none;
+        }
+        .track-play {
+            background-color: #FF5349;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        .track-info {
+            flex-grow: 1;
+        }
+        .track-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .track-artist {
+            color: #999;
+            font-size: 14px;
+        }
+        .track-waveform {
+            flex-grow: 1;
+            height: 60px;
+            background-color: #f3f3f3;
+            margin: 0 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        .track-waveform::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(to bottom, 
+                    #FF5349 0%, #FF5349 50%, 
+                    #f3f3f3 50%, #f3f3f3 100%);
+            background-size: 3px 4px;
+            background-repeat: repeat-x;
+            opacity: 0.7;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        .social-icons {
+            margin-top: 10px;
+        }
+        .social-icons a {
+            color: white;
+            font-size: 24px;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">SoundCloud Cat</div>
+            <div class="nav-links">
+                <a href="https://pump.fun/board" target="_blank">Pump</a>
+                <a href="https://x.com/SoundCloudCat" target="_blank">Twitter</a>
+                <a href="https://dexscreener.com" target="_blank">Dexscreener</a>
+                <a href="https://t.me/+Z3QwGaLKodAxZmUx" target="_blank">Telegram</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="banner">
+        <h1>Welcome to SoundCloud Cat</h1>
+    </div>
+
+    <div class="content">
+        <img src="https://i.postimg.cc/ncwg35RN/Sound-cloud-cat-1.png" alt="SoundCloud Cat" class="cat-image">
+        
+        <div class="track-list">
+            <div class="track">
+                <button class="track-play"><i class="fas fa-play"></i></button>
+                <div class="track-info">
+                    <div class="track-title">Meow Mix</div>
+                    <div class="track-artist">DJ Whiskers</div>
+                </div>
+                <div class="track-waveform"></div>
+            </div>
+            <div class="track">
+                <button class="track-play"><i class="fas fa-play"></i></button>
+                <div class="track-info">
+                    <div class="track-title">Purr-fect Beats</div>
+                    <div class="track-artist">Feline Grooves</div>
+                </div>
+                <div class="track-waveform"></div>
+            </div>
+            <div class="track">
+                <button class="track-play"><i class="fas fa-play"></i></button>
+                <div class="track-info">
+                    <div class="track-title">Catnip Dreams</div>
+                    <div class="track-artist">The Scratching Post</div>
+                </div>
+                <div class="track-waveform"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 SoundCloud Cat. All rights reserved.</p>
+      
+        </div>
+    </footer>
+</body>
+</html>
